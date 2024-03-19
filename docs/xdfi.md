@@ -4,7 +4,7 @@
 ### SYNOPSIS
 **xdfi** [*opts*]
 ### DESCRIPTION
-**xdfi** is a Deadfish interpreter that's written in C. It can interpret from a plain string, and a file.
+**xdfi** is a Deadfish interpreter that's written in C. It can interpret a plain string, or the contents a file!
 ### OPTIONS
 **help**
 
