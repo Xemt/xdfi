@@ -4,7 +4,7 @@
 ### SYNOPSIS
 **xdfi** [*opts*]
 ### DESCRIPTION
-**xdfi** is a deadfish interpreter that's written in C. It can interpret from a plain string, and a file.
+**xdfi** is a Deadfish interpreter that's written in C. It can interpret from a plain string, and a file.
 ### OPTIONS
 **help**
 
@@ -20,11 +20,11 @@ Print the author of xdfi (that's me!).
 
 **-f** *filepath*
 
-Interpret the contents of the file at *filepath* as deadfish code.
+Interpret the contents of the file at *filepath* as Deadfish code.
 
 **-e** *expr*
 
-Interpret *expr* as deadfish code.
+Interpret *expr* as Deadfish code.
 
 ### EXAMPLE
 `xdfi -e iio`
