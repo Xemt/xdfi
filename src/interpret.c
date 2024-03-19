@@ -1,4 +1,4 @@
-/* Xemt, 3/18/24. 
+/* Xemt, 3/18/24 - 3/19/24. 
  
    MIT License
 
@@ -33,31 +33,34 @@
 
 	/* Deadfish instructions. */
 	enum {
-		DF_INST_INC = 105,
-		DF_INST_DEC = 100,
-		DF_INST_SQR = 115,
-		DF_INST_OUT = 111
+		INST_INC = 105, /* i */
+		INST_DEC = 100, /* d */
+		INST_SQR = 115, /* s */
+		INST_OUT = 111  /* o */
+	};
+
+	/* Accumulator limits. */
+	enum {
+		ACC_MIN = -1,
+		ACC_MAX = 255
 	};
 
 	static int acc;
-#	define ACC_MIN -1
-#	define ACC_MAX 256
 
-	/* Do something based on the specified
-		 character. */
+	/* Do something based on the specified character. */
 	static void consumech(char c)
 	{
 		switch (c) {
-			case DF_INST_INC:
+			case INST_INC:
 				acc++;
 			break;
-			case DF_INST_DEC:
+			case INST_DEC:
 				acc--;
 			break;
-			case DF_INST_SQR:
+			case INST_SQR:
 				acc = acc * acc;
 			break;
-			case DF_INST_OUT:
+			case INST_OUT:
 				printf("Accumulator: %d\n", acc);
 			break;
 		}
@@ -78,14 +81,14 @@
 		}
 	}
 
-	/* Interpret the contents of a file as deadfish
-		 code. */
+	/* Interpret the contents of a file as deadfish code. */
 	void finterpret(const char *filepath)
 	{
 		struct stat st;
 		mode_t mode = 0;
 		FILE *fp = NULL;
 		char buf[MAX_BYTES] = {0};
+		char *p = NULL;
 
 		if ( stat(filepath, &st) != 0 ) {
 			return;
@@ -99,8 +102,14 @@
 
 		fp = fopen(filepath, "r+");
 
-		(void)fgets(buf, MAX_BYTES, fp);
+		p = fgets(buf, MAX_BYTES, fp);
 
+		if (p == NULL) {
+			return;
+		}
+
+		p = NULL;
+		
 		sinterpret(buf);
 
 		fclose(fp);
