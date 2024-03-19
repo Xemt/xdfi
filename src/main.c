@@ -22,12 +22,12 @@
    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
    SOFTWARE. */
 
-extern void sinterpret(const char*);
-extern void finterpret(const char*);
-
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
+
+extern void sinterpret(const char*);
+extern void finterpret(const char*);
 
 #include "interpret.c"
 
@@ -51,6 +51,7 @@ int main(int argc, char *argv[])
 		goto main_end;
 	}
 
+	/* Avoid the program name. */
 	for (i = 1; i != argc; i++) {
 		if ( STREQL(argv[i], "help") || STREQL(argv[i], "author") ) {
 			USAGE();
