@@ -61,6 +61,7 @@ int main(int argc, char *argv[])
 		} else if ( STREQL(argv[i], "author") ) {
 			AUTHOR();
 			break;
+		/* We're doing the same thing, so why not merge them? */
 		} else if ( STREQL(argv[i], "-f") ||
 			    STREQL(argv[i], "-e") )
 		{
