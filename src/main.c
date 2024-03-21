@@ -1,4 +1,4 @@
-/* Xemt, 3/13/24 - 3/19/24. 
+/* Xemt, 3/13/24 - 3/21/24. 
  
    MIT License
 
@@ -31,9 +31,8 @@ extern void finterpret(const char*);
 
 #include "interpret.c"
 
-
 #define PROGNAME argv[0]
-#define PROGVERS "1.0.0"
+#define PROGVERS "1.0.1"
 
 #define USAGE() printf("USAGE:\n\t%s [opts]\nOPTIONS:\n\thelp, usage -- Output this usage page.\n\tversion -- Output the current version of %s.\n\tauthor -- Output the author of %s\n\t-f filepath -- Interpret the contents of filepath as deadfish code.\n\t-e expr -- Interpret a string as deadfish code.\n", PROGNAME, PROGNAME, PROGNAME)
 #define VERSION() printf("VERSION: %s\n", PROGVERS)
@@ -62,22 +61,22 @@ int main(int argc, char *argv[])
 		} else if ( STREQL(argv[i], "author") ) {
 			AUTHOR();
 			break;
-		} else if ( STREQL(argv[i], "-f") ) {
-			i++;
-			if (i > (argc - 1)) {
-				printf("%s: Argument required for '-f'\n", PROGNAME);
+		} else if ( STREQL(argv[i], "-f") ||
+			    STREQL(argv[i], "-e") )
+		{
+			/* We don't want to go out of bounds accidentally. */
+			if ((i + 1) > (argc - 1)) {
+				printf("%s: Argument required for '%s'\n", PROGNAME, argv[i]);
 				break;
 			}
 
-			finterpret(argv[i]);
-		} else if ( STREQL(argv[i], "-e") ) {
 			i++;
-			if (i > (argc - 1)) {
-				printf("%s: Argument required for '-e'\n", PROGNAME);
-				break;
-			}
 
-			sinterpret(argv[i]);
+			if ( STREQL(argv[i], "-f") ) {
+				finterpret(argv[i]);
+			} else if ( STREQL(argv[i], "-e") ) {
+				sinterpret(argv[i]);
+			}
 		} else {
 			printf("%s: Unknown command '%s'.\n", PROGNAME, argv[i]);
 			break;
@@ -86,7 +85,7 @@ int main(int argc, char *argv[])
 	
 	goto main_end;
 main_end:
-	if (errno) {
+	if (errno != 0) {
 		errmsg = strerror(errno);
 		printf("%s: %s\n", PROGNAME, errmsg);
 		errmsg = NULL;
