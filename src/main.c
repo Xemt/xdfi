@@ -77,6 +77,8 @@ int main(int argc, char *argv[])
 			} else if ( STREQL(argv[i], "-e") ) {
 				sinterpret(argv[i + 1]);
 			}
+
+			break;
 		} else {
 			printf("%s: Unknown command '%s'.\n", PROGNAME, argv[i]);
 			break;
