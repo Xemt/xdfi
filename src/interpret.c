@@ -31,19 +31,15 @@
 
 #	define MAX_BYTES 1024
 
-	/* Deadfish instructions. */
-	enum {
-		INST_INC = 105, /* i */
-		INST_DEC = 100, /* d */
-		INST_SQR = 115, /* s */
-		INST_OUT = 111  /* o */
-	};
+	/* Deadfish instructions. They correlate to ASCII characters. */
+#	define INST_INC 105
+#	define INST_DEC 100
+#	define INST_SQR 115
+#	define INST_OUT 111
 
 	/* Accumulator limits. */
-	enum {
-		ACC_MIN = -1,
-		ACC_MAX = 255
-	};
+#	define ACC_MIN -1
+#	define ACC_MAX 255
 
 	static int acc;
 
@@ -85,32 +81,32 @@
 	void finterpret(const char *filepath)
 	{
 		struct stat st;
-		mode_t mode = 0;
 		FILE *fp = NULL;
 		char buf[MAX_BYTES] = {0};
-		char *p = NULL;
+		char *bufptr = NULL;
+		acc = 0;
 
 		if ( stat(filepath, &st) != 0 ) {
 			return;
 		}
 
-		mode = st.st_mode;
-
-		if ( !S_ISREG(mode) ) {
+		/* We can't interpret anything other than a regular file. */
+		if ( !S_ISREG(st.st_mode) ) {
 			return;
 		}
 
 		fp = fopen(filepath, "r+");
 
-		p = fgets(buf, MAX_BYTES, fp);
+		bufptr = fgets(buf, MAX_BYTES, fp);
 
-		if (p == NULL) {
+		/* What went wrong? */
+		if (bufptr == NULL) {
 			return;
 		}
-
-		p = NULL;
 		
-		sinterpret(buf);
+		sinterpret(bufptr);
+
+		bufptr = NULL;
 
 		fclose(fp);
 		fp = NULL;		
