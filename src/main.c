@@ -32,7 +32,7 @@ extern void finterpret(const char*);
 #include "interpret.c"
 
 #define PROGNAME "xdfi"
-#define PROGVERS "1.0.1"
+#define PROGVERS "1.1.1"
 
 #define USAGE() printf("USAGE:\n\t%s [opts]\nOPTIONS:\n\thelp, usage -- Output this usage page.\n\tversion -- Output the current version of %s.\n\tauthor -- Output the author of %s\n\t-f filepath -- Interpret the contents of filepath as deadfish code.\n\t-e expr -- Interpret a string as deadfish code.\n", PROGNAME, PROGNAME, PROGNAME)
 #define VERSION() printf("VERSION: %s\n", PROGVERS)
