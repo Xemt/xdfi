@@ -64,18 +64,17 @@ int main(int argc, char *argv[])
 		} else if ( STREQL(argv[i], "-f") ||
 			    STREQL(argv[i], "-e") )
 		{
+		
 			/* We don't want to go out of bounds accidentally. */
 			if ((i + 1) > (argc - 1)) {
 				printf("%s: Argument required for '%s'\n", PROGNAME, argv[i]);
 				break;
 			}
-
-			i++;
-
+			
 			if ( STREQL(argv[i], "-f") ) {
-				finterpret(argv[i]);
+				finterpret(argv[i + 1]);
 			} else if ( STREQL(argv[i], "-e") ) {
-				sinterpret(argv[i]);
+				sinterpret(argv[i + 1]);
 			}
 		} else {
 			printf("%s: Unknown command '%s'.\n", PROGNAME, argv[i]);
