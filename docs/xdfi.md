@@ -1,11 +1,11 @@
 # xdfi(1): Deadfish interpreter written in C.
-### NAME
+## NAME
 **xdfi** - Deadfish interpreter written in C.
-### SYNOPSIS
+## SYNOPSIS
 **xdfi** [*opts*]
-### DESCRIPTION
+## DESCRIPTION
 **xdfi** is a Deadfish interpreter that's written in C. It can interpret a plain string, or the contents a file!
-### OPTIONS
+## OPTIONS
 **help**
 
 Print the help/usage of xdfi.
@@ -26,8 +26,9 @@ Interpret the contents of the file at *filepath* as Deadfish code.
 
 Interpret *expr* as Deadfish code.
 
-### EXAMPLE
+## EXAMPLE
 `xdfi -e iio`
-
-### AUTHOR
+## AUTHOR
 [Xemt](https://github.com/Xemt/)
+## LICENSE
+[MIT License](https://choosealicense.com/licenses/mit/).
