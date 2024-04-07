@@ -29,6 +29,6 @@ Interpret *expr* as Deadfish code.
 ## EXAMPLE
 `xdfi -e iio`
 ## AUTHOR
-[Xemt](https://github.com/Xemt/)
+Xemt (https://github.com/Xemt/).
 ## LICENSE
-[MIT License](https://choosealicense.com/licenses/mit/).
+MIT License (https://choosealicense.com/licenses/mit/).
