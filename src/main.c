@@ -1,4 +1,4 @@
-/* Xemt, 3/13/24 - 3/21/24. 
+/* Xemt, 3/13/24 - 5/3/24. 
  
    MIT License
 
@@ -31,11 +31,11 @@ extern void finterpret(const char*);
 
 #include "interpret.c"
 
-#define PROGNAME "xdfi"
-#define PROGVERS "1.1.1"
+#define PROGRAM_NAME "xdfi"
+#define PROGRAM_VERS "1.1.1"
 
-#define USAGE() printf("USAGE:\n\t%s [opts]\nOPTIONS:\n\thelp, usage -- Output this usage page.\n\tversion -- Output the current version of %s.\n\tauthor -- Output the author of %s\n\t-f filepath -- Interpret the contents of filepath as deadfish code.\n\t-e expr -- Interpret a string as deadfish code.\n", PROGNAME, PROGNAME, PROGNAME)
-#define VERSION() printf("VERSION: %s\n", PROGVERS)
+#define USAGE() printf("USAGE:\n\t%s [opts]\nOPTIONS:\n\thelp, usage -- Output the usage.\n\tversion -- Output the current version of %s.\n\tauthor -- Output the author of %s\n\t-f filepath -- Interpret the contents of filepath as deadfish code.\n\t-e expr -- Interpret a string as deadfish code.\n", PROGRAM_NAME, PROGRAM_NAME, PROGRAM_NAME)
+#define VERSION() printf("VERSION: %s\n", PROGRAM_VERS)
 #define AUTHOR() printf("AUTHOR: Xemt <https://www.github.com/Xemt>\n")
 
 #define STREQL(s1, s2) !strcmp(s1, s2)
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 		goto main_end;
 	}
 
-	/* Avoid the program name. */
+	/* It starts at 1 to avoid checking the program name. */
 	for (i = 1; i != argc; i++) {
 		if ( STREQL(argv[i], "help") || STREQL(argv[i], "author") ) {
 			USAGE();
@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 		
 			/* We don't want to go out of bounds accidentally. */
 			if ((i + 1) > (argc - 1)) {
-				printf("%s: Argument required for '%s'\n", PROGNAME, argv[i]);
+				printf("%s: Argument required for '%s'\n", PROGRAM_NAME, argv[i]);
 				break;
 			}
 			
@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
 
 			break;
 		} else {
-			printf("%s: Unknown command '%s'.\n", PROGNAME, argv[i]);
+			printf("%s: Unknown command '%s'.\n", PROGRAM_NAME, argv[i]);
 			break;
 		}
 	}
@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
 main_end:
 	if (errno != 0) {
 		errmsg = strerror(errno);
-		printf("%s: %s\n", PROGNAME, errmsg);
+		printf("%s: %s\n", PROGRAM_NAME, errmsg);
 		errmsg = NULL;
 	}
 	return errno;
