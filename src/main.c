@@ -1,4 +1,4 @@
-/* Xemt, 3/13/24 - 5/3/24. 
+/* Xemt <https://github.com/Xemt>, 3/13/24 - 7/10/24. 
  
    MIT License
 
@@ -26,19 +26,29 @@
 #include <stdio.h>
 #include <string.h>
 
-extern void sinterpret(const char*);
-extern void finterpret(const char*);
+/* Annoying errors when compiling due to the std stream macros. */
+#if defined(__wasm)		||	\
+    defined(__wasm32)		||	\
+    defined(__wasm32__)		||	\
+    defined(__wasm__)
+#	pragma clang diagnostic ignored "-Wdisabled-macro-expansion"
+#endif
+
+extern void DF_Interpret_Str(const char*);
+extern void DF_Interpret_File(const char*);
 
 #include "interpret.c"
 
-#define PROGRAM_NAME "xdfi"
-#define PROGRAM_VERS "1.1.1"
+#define PROGRAM_NAME	"xdfi"
+#define PROGRAM_VERSION "1.1.1"
+
+#define OPT_PREFIX_CHR *"-"
 
 #define USAGE() printf("USAGE:\n\t%s [opts]\nOPTIONS:\n\thelp, usage -- Output the usage.\n\tversion -- Output the current version of %s.\n\tauthor -- Output the author of %s\n\t-f filepath -- Interpret the contents of filepath as deadfish code.\n\t-e expr -- Interpret a string as deadfish code.\n", PROGRAM_NAME, PROGRAM_NAME, PROGRAM_NAME)
-#define VERSION() printf("VERSION: %s\n", PROGRAM_VERS)
+#define VERSION() printf("VERSION: %s\n", PROGRAM_VERSION)
 #define AUTHOR() printf("AUTHOR: Xemt <https://www.github.com/Xemt>\n")
 
-#define STREQL(s1, s2) !strcmp(s1, s2)
+#define STR_EQL(s1, s2) !strcmp(s1, s2)
 
 int main(int argc, char *argv[])
 {
@@ -47,51 +57,47 @@ int main(int argc, char *argv[])
 
 	if (argc == 1) {
 		USAGE();
-		goto main_end;
+		goto _main_end;
 	}
 
-	/* It starts at 1 to avoid checking the program name. */
+	/* Parse args, but avoid the program name. */
 	for (i = 1; i != argc; i++) {
-		if ( STREQL(argv[i], "help") || STREQL(argv[i], "author") ) {
+		if ( STR_EQL(argv[i], "help") || STR_EQL(argv[i], "usage") ) {
 			USAGE();
 			break;
-		} else if ( STREQL(argv[i], "version") ) {
+		} else if ( STR_EQL(argv[i], "version") ) {
 			VERSION();
 			break;
-		} else if ( STREQL(argv[i], "author") ) {
+		} else if ( STR_EQL(argv[i], "author") ) {
 			AUTHOR();
 			break;
-		/* We're doing the same thing, so why not merge them? */
-		} else if ( STREQL(argv[i], "-f") ||
-			    STREQL(argv[i], "-e") )
-		{
-		
-			/* We don't want to go out of bounds accidentally. */
+		} else if (argv[i][0] == OPT_PREFIX_CHR) {
+			/* We don't want to go out of bounds accidentally. Besides, all our options require a param. */
 			if ((i + 1) > (argc - 1)) {
-				printf("%s: Argument required for '%s'\n", PROGRAM_NAME, argv[i]);
+				fprintf(stderr, "%s: Param required for '%s'!\n", PROGRAM_NAME, argv[i]);
 				break;
 			}
 			
 			if ( STREQL(argv[i], "-f") ) {
-				finterpret(argv[i + 1]);
+				DF_Interpret_File(argv[i + 1]);
 			} else if ( STREQL(argv[i], "-e") ) {
-				sinterpret(argv[i + 1]);
+				DF_Interpret_Str(argv[i + 1]);
 			}
 
 			break;
 		} else {
-			printf("%s: Unknown command '%s'.\n", PROGRAM_NAME, argv[i]);
+			fprintf(stderr, "%s: Unknown command '%s'.\n", PROGRAM_NAME, argv[i]);
 			break;
 		}
 	}
 	
-	goto main_end;
-main_end:
+	goto _main_end;
+_main_end:
 	if (errno != 0) {
 		errmsg = strerror(errno);
-		printf("%s: %s\n", PROGRAM_NAME, errmsg);
+		fprintf(stderr, "%s: %s\n", PROGRAM_NAME, errmsg);
 		errmsg = NULL;
 	}
-	return errno;
+	
+	return (errno);
 }
-
