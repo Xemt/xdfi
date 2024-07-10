@@ -1,4 +1,4 @@
-/* Xemt, 3/18/24 - 7/10/24. 
+/* Xemt <https://github.com/Xemt>, 3/18/24 - 7/10/24. 
  
    MIT License
 
