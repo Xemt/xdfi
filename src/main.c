@@ -26,14 +26,6 @@
 #include <stdio.h>
 #include <string.h>
 
-/* Annoying errors when compiling due to the std stream macros. */
-#if defined(__wasm)		||	\
-    defined(__wasm32)		||	\
-    defined(__wasm32__)		||	\
-    defined(__wasm__)
-#	pragma clang diagnostic ignored "-Wdisabled-macro-expansion"
-#endif
-
 extern void DF_Interpret_Str(const char*);
 extern void DF_Interpret_File(const char*);
 
