@@ -26,7 +26,7 @@
 
 #if !defined(INTERPRET_C)
 #	define INTERPRET_C
-	
+
 #	include <sys/stat.h>
 
 #	define MAX_BYTES 1024
@@ -50,16 +50,19 @@
 		switch (c) {
 			case INST_INC:
 				acc++;
-			break;
+				break;
 			case INST_DEC:
 				acc--;
-			break;
+				break;
 			case INST_SQR:
 				acc = acc * acc;
-			break;
+				break;
 			case INST_OUT:
 				printf("Accumulator: %d\n", acc);
-			break;
+				break;
+			/* USELESS JUNK THAT THE COMPILER FORCES ME TO DO. */
+			default:
+				break;
 		}
 	}
 
