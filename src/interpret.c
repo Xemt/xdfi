@@ -60,9 +60,6 @@
 			case INST_OUT:
 				printf("Accumulator: %d\n", acc);
 				break;
-			/* USELESS JUNK THAT THE COMPILER FORCES ME TO DO. */
-			default:
-				break;
 		}
 	}
 
