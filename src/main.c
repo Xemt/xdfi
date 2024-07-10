@@ -78,9 +78,9 @@ int main(int argc, char *argv[])
 				break;
 			}
 			
-			if ( STREQL(argv[i], "-f") ) {
+			if ( STR_EQL(argv[i], "-f") ) {
 				DF_Interpret_File(argv[i + 1]);
-			} else if ( STREQL(argv[i], "-e") ) {
+			} else if ( STR_EQL(argv[i], "-e") ) {
 				DF_Interpret_Str(argv[i + 1]);
 			}
 
