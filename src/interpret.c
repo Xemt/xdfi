@@ -1,4 +1,4 @@
-/* Xemt, 3/18/24 - 3/21/24. 
+/* Xemt, 3/18/24 - 7/10/24. 
  
    MIT License
 
@@ -44,7 +44,8 @@
 	static int acc;
 
 	/* Do something based on the specified character. */
-	static void consumech(char c)
+	static void
+	Consume_Chr(char c)
 	{
 		switch (c) {
 			case INST_INC:
@@ -62,8 +63,8 @@
 		}
 	}
 
-	/* Interpret a string as deadfish code. */
-	void sinterpret(const char *s)
+	void 
+	DF_Interpret_Str(const char *s)
 	{
 		size_t i;
 		acc = 0;
@@ -73,17 +74,17 @@
 				acc = 0;
 			}
 
-			consumech(s[i]);
+			Consume_Chr(s[i]);
 		}
 	}
 
-	/* Interpret the contents of a file as deadfish code. */
-	void finterpret(const char *filepath)
+	void
+	DF_Interpret_File(const char *filepath)
 	{
-		struct stat st;
-		FILE *fp = NULL;
-		char buf[MAX_BYTES] = {0};
-		char *bufptr = NULL;
+		struct stat	 st;
+		FILE 		*fp = NULL;
+		char		 buf[MAX_BYTES] = {0};
+		char		*bufptr = NULL;
 		acc = 0;
 
 		if ( stat(filepath, &st) != 0 ) {
@@ -104,7 +105,7 @@
 			return;
 		}
 		
-		sinterpret(bufptr);
+		DF_Interpret_Str(bufptr);
 
 		bufptr = NULL;
 
@@ -112,4 +113,3 @@
 		fp = NULL;		
 	}
 #endif /* !defined(INTERPRET_C) */
-	
